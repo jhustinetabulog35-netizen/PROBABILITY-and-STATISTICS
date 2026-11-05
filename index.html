@@ -6,12 +6,12 @@
   <title>Statistics Learning Portfolio</title>
   <style>
     :root {
-      --site-primary: #183B56;
+      --site-primary: #243B73;
       --site-on-primary: #FFFFFF;
-      --site-secondary: #DCEAF2;
-      --site-on-secondary: #183B56;
-      --site-background: #F4F7FA;
-      --site-on-background: #182B3A;
+      --site-secondary: #E5EAFE;
+      --site-on-secondary: #243B73;
+      --site-background: #F7F8FD;
+      --site-on-background: #202943;
       --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --site-font-heading: Georgia, "Times New Roman", serif;
       --site-heading-scale: 1;
@@ -21,7 +21,8 @@
       --surface: light-dark(#FFFFFF, #17232D);
       --muted: light-dark(#5D7180, #B0BEC8);
       --line: light-dark(#D9E2E9, #344653);
-      --accent: #E6A23C;
+      --accent: #F2A65A;
+      --glow: rgba(115, 132, 219, .18);
     }
     * { box-sizing: border-box; }
     html { color-scheme: light dark; scroll-behavior: smooth; }
@@ -40,27 +41,57 @@
       background: var(--site-background);
       color: var(--site-on-background);
     }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes orbit-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes soft-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(230, 162, 60, .22); }
+      50% { box-shadow: 0 0 0 12px rgba(230, 162, 60, 0); }
+    }
+    @keyframes float-gently {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+    @keyframes shimmer {
+      from { background-position: 0% 50%; }
+      to { background-position: 200% 50%; }
+    }
+    .topbar { animation: fade-up .65s ease-out both; }
+    .hero-inner > * { animation: fade-up .7s ease-out both; }
+    .hero-inner > :nth-child(2) { animation-delay: .1s; }
+    .hero-inner > :nth-child(3) { animation-delay: .2s; }
+    .hero-inner > :nth-child(4) { animation-delay: .3s; }
+    .hero-orbit { animation: orbit-spin 38s linear infinite; }
+    .hero-orbit span { animation: soft-pulse 3s ease-in-out infinite; }
     a { color: inherit; }
     .topbar {
       display: flex; justify-content: space-between; align-items: center;
-      max-width: 1120px; margin: auto; padding: 22px 28px;
+      max-width: 1120px; margin: auto; padding: 18px 28px;
+      position: relative; z-index: 5;
     }
     .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: .02em; }
     .brand-mark {
       width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center;
       background: var(--site-primary); color: var(--site-on-primary); font-weight: 900;
     }
-    nav { display: flex; gap: 24px; font-size: .92rem; }
-    nav a { text-decoration: none; color: var(--muted); }
-    nav a:hover { color: var(--site-on-background); }
+    nav { display: flex; gap: 8px; font-size: .9rem; }
+    nav a { text-decoration: none; color: var(--muted); padding: 9px 13px; border-radius: 999px; transition: background .2s, color .2s, transform .2s; }
+    nav a:hover { color: var(--site-primary); background: var(--site-secondary); transform: translateY(-2px); }
     .hero {
-      background: var(--site-primary);
+      background: radial-gradient(circle at 82% 18%, rgba(139, 155, 245, .28), transparent 27%), linear-gradient(125deg, #202F60 0%, #304B8A 55%, #5364A5 100%);
       color: var(--site-on-primary);
       position: relative;
       padding: calc(76px * var(--site-spacing-scale)) 28px calc(84px * var(--site-spacing-scale));
       overflow: hidden;
+      isolation: isolate;
     }
     .hero-inner { max-width: 1064px; margin: auto; position: relative; z-index: 1; }
+    .hero-inner { padding: 12px 0; }
     .eyebrow { text-transform: uppercase; letter-spacing: .16em; font-size: .75rem; font-weight: 800; opacity: .76; }
     h1, h2, h3 { font-family: var(--site-font-heading); line-height: 1.12; }
     h1 { font-size: clamp(2.8rem, 7vw, calc(5.2rem * var(--site-heading-scale))); max-width: 760px; margin: 18px 0; letter-spacing: -.045em; }
@@ -79,6 +110,7 @@
       position: absolute; right: 8%; top: 12%; width: 310px; height: 310px;
       border: 1px solid rgba(255,255,255,.16); border-radius: 50%;
       opacity: var(--site-decoration-opacity);
+      animation: orbit-spin 48s linear infinite, float-gently 7s ease-in-out infinite;
     }
     .hero-orbit:before, .hero-orbit:after {
       content: ""; position: absolute; border: 1px solid rgba(255,255,255,.16); border-radius: 50%;
@@ -90,42 +122,85 @@
       width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center;
       font-size: 1.4rem; font-weight: 900;
     }
-    main { max-width: 1120px; margin: auto; padding: 66px 28px 84px; }
+    main { max-width: 1120px; margin: auto; padding: 72px 28px 90px; }
     .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 28px; }
     .section-heading h2 { font-size: clamp(2rem, 4vw, calc(3rem * var(--site-heading-scale))); margin: 8px 0 0; }
     .section-heading p { max-width: 420px; color: var(--muted); margin: 0; }
     .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
     .resource-card {
-      background: var(--surface); border: 1px solid var(--line);
+      background: linear-gradient(var(--surface), var(--surface)) padding-box, linear-gradient(135deg, rgba(112, 130, 220, .28), rgba(242, 166, 90, .2)) border-box;
+      border: 1px solid transparent;
       border-radius: calc(20px * var(--site-radius-scale)); padding: 25px;
       display: flex; flex-direction: column; min-height: 260px;
-      box-shadow: 0 10px 30px rgba(20, 45, 62, .045);
+      position: relative; overflow: hidden;
+      box-shadow: 0 12px 32px rgba(35, 49, 93, .07);
+      opacity: 0;
+      animation: fade-up .65s ease-out forwards;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
     }
+    .resource-card::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: linear-gradient(90deg, #5368B2, #91A4E8, #F2A65A); transform: scaleX(.35); transform-origin: left; transition: transform .3s ease; }
+    .resource-card:hover::before { transform: scaleX(1); }
+    .resource-card:nth-child(1) { animation-delay: .08s; }
+    .resource-card:nth-child(2) { animation-delay: .18s; }
+    .resource-card:nth-child(3) { animation-delay: .28s; }
+    .resource-card:nth-child(4) { animation-delay: .38s; }
+    .resource-card:hover { transform: translateY(-8px) scale(1.012); box-shadow: 0 22px 44px rgba(35, 49, 93, .14); }
     .card-top { display: flex; justify-content: space-between; align-items: center; }
     .file-icon {
-      width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center;
-      background: var(--site-secondary); color: var(--site-on-secondary); font-weight: 900;
+      width: 54px; height: 54px; border-radius: 17px; display: grid; place-items: center;
+      background: linear-gradient(145deg, #E8ECFF, #D8E4F8); color: var(--site-on-secondary); font-weight: 900;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.85), 0 7px 16px rgba(65, 83, 145, .12);
+      transition: transform .25s ease, box-shadow .25s ease;
     }
+    .resource-card:hover .file-icon { transform: rotate(-7deg) scale(1.1); box-shadow: 0 10px 22px rgba(65, 83, 145, .2); }
+    .video-section { margin-top: 68px; }
+    .video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .video-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(35, 49, 93, .06); transition: transform .25s ease, box-shadow .25s ease; }
+    .video-card:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(35, 49, 93, .13); }
+    .video-frame { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 12px; display: block; background: #0D1720; }
+    .video-watch-link { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: radial-gradient(circle at 50% 35%, #5368B2, #202F60 72%); color: #FFFFFF; text-decoration: none; transition: filter .2s ease, transform .2s ease; }
+    .video-watch-link:hover { filter: brightness(1.12); }
+    .video-play-icon { display: grid; place-items: center; width: 58px; height: 58px; padding-left: 4px; border-radius: 50%; background: #FFFFFF; color: #243B73; font-size: 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+    .video-card h3 { font-size: 1.2rem; margin: 14px 4px 4px; }
+    .video-card p { color: var(--muted); margin: 0 4px 6px; font-size: .9rem; }
     .file-type { font-size: .76rem; font-weight: 800; letter-spacing: .09em; color: var(--muted); }
     .resource-card h3 { font-size: 1.55rem; margin: 20px 0 8px; }
     .resource-card p { color: var(--muted); margin: 0 0 22px; }
-    .card-link { margin-top: auto; color: var(--site-primary); font-weight: 800; text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
+    .card-link { margin-top: auto; color: var(--site-primary); font-weight: 800; text-decoration: none; display: inline-flex; gap: 10px; align-items: center; width: fit-content; }
+    .card-link span { display: inline-grid; place-items: center; width: 29px; height: 29px; border-radius: 50%; background: var(--site-secondary); transition: transform .2s ease, background .2s ease; }
+    .card-link:hover span { transform: translate(3px, -2px); background: #FCEBD9; }
     @media (prefers-color-scheme: dark) { .card-link { color: #A9D4EF; } }
     .card-link:hover { text-decoration: underline; }
     .about {
-      margin-top: 68px; padding: 34px; background: var(--site-secondary);
+      margin-top: 68px; padding: 38px; background: linear-gradient(125deg, #E8ECFF, #DCEAF5 75%, #FCEBD9);
       color: var(--site-on-secondary); border-radius: calc(22px * var(--site-radius-scale));
       display: grid; grid-template-columns: 1.2fr .8fr; gap: 32px; align-items: center;
     }
     .about h2 { font-size: 2rem; margin: 8px 0 12px; }
     .about p { margin: 0; opacity: .82; }
     .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .stat { background: rgba(255,255,255,.55); border-radius: 14px; padding: 16px; }
+    .stat { background: rgba(255,255,255,.68); border: 1px solid rgba(255,255,255,.7); border-radius: 14px; padding: 16px; transition: transform .2s ease; }
+    .stat:hover { transform: translateY(-4px); }
     .stat strong { display: block; font-family: var(--site-font-heading); font-size: 2rem; line-height: 1.1; }
     .stat span { font-size: .82rem; opacity: .8; }
-    footer { border-top: 1px solid var(--line); padding: 24px 28px; color: var(--muted); text-align: center; font-size: .88rem; }
+    .survey-section { margin-top: 68px; }
+    .survey-card { background: var(--surface); border: 1px solid var(--line); border-radius: calc(20px * var(--site-radius-scale)); padding: 28px; box-shadow: 0 10px 30px rgba(35, 49, 93, .06); }
+    .survey-card h3 { font-size: 1.35rem; margin: 0 0 14px; }
+    .survey-question { border: 0; border-top: 1px solid var(--line); padding: 20px 0 4px; margin: 18px 0 0; }
+    .survey-question legend { font-weight: 800; padding: 0 0 10px; }
+    .survey-option { display: inline-flex; align-items: center; gap: 8px; margin: 5px 18px 8px 0; color: var(--muted); cursor: pointer; }
+    .survey-option input { accent-color: var(--site-primary); }
+    .survey-submit { margin-top: 20px; border: 0; cursor: pointer; background: linear-gradient(100deg, #263B78, #5368B2, #263B78); background-size: 200% 100%; color: white; font: inherit; box-shadow: 0 8px 20px rgba(38, 59, 120, .2); }
+    .survey-submit:hover { animation: shimmer 2s linear infinite; }
+    .survey-note { color: var(--muted); font-size: .9rem; margin: 12px 0 0; }
+    .survey-success { display: none; margin-top: 16px; padding: 14px 16px; border-radius: 12px; background: var(--site-secondary); color: var(--site-on-secondary); font-weight: 700; }
+    footer { border-top: 1px solid var(--line); padding: 28px; color: var(--muted); text-align: center; font-size: .88rem; background: rgba(229, 234, 250, .35); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .resource-card { opacity: 1; }
+    }
     @media (max-width: 700px) {
-      .topbar { padding: 18px 20px; }
+      .topbar { padding: 18px 20px; flex-wrap: wrap; gap: 12px; }
       nav { gap: 13px; font-size: .82rem; }
       .hero { padding: 62px 22px 68px; }
       .hero-orbit { right: -145px; opacity: .5; }
@@ -133,6 +208,7 @@
       .section-heading { display: block; }
       .section-heading p { margin-top: 12px; }
       .resource-grid, .about { grid-template-columns: 1fr; }
+      .video-grid { grid-template-columns: 1fr; }
       .about { padding: 25px; }
     }
     @media (max-width: 420px) { nav { gap: 9px; } nav a { font-size: .76rem; } }
@@ -146,6 +222,8 @@
       </a>
       <nav aria-label="Main navigation">
         <a href="#resources">Resources</a>
+        <a href="#videos">Videos</a>
+        <a href="#survey">Survey</a>
         <a href="#about">About</a>
       </nav>
     </header>
@@ -204,6 +282,74 @@
         </div>
       </section>
 
+      <section class="video-section" id="videos">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow" style="color:var(--muted)">Watch and learn</div>
+            <h2>Video lessons</h2>
+          </div>
+          <p>Watch these five YouTube videos alongside the study materials above.</p>
+        </div>
+        <div class="video-grid">
+          <article class="video-card">
+            <a class="video-frame video-watch-link" href="https://www.youtube.com/watch?v=Sqkhzdn1eOU" target="_blank" rel="noopener noreferrer" aria-label="Watch statistics video lesson 1 on YouTube"><span class="video-play-icon" aria-hidden="true">▶</span><strong>Watch on YouTube</strong></a>
+            <h3>Video lesson 01</h3><p>Statistics learning video</p>
+          </article>
+          <article class="video-card">
+            <a class="video-frame video-watch-link" href="https://www.youtube.com/watch?v=qE4bUJP08jo" target="_blank" rel="noopener noreferrer" aria-label="Watch statistics video lesson 2 on YouTube"><span class="video-play-icon" aria-hidden="true">▶</span><strong>Watch on YouTube</strong></a>
+            <h3>Video lesson 02</h3><p>Statistics learning video</p>
+          </article>
+          <article class="video-card">
+            <a class="video-frame video-watch-link" href="https://www.youtube.com/watch?v=T3uCuWdJlac" target="_blank" rel="noopener noreferrer" aria-label="Watch statistics video lesson 3 on YouTube"><span class="video-play-icon" aria-hidden="true">▶</span><strong>Watch on YouTube</strong></a>
+            <h3>Video lesson 03</h3><p>Statistics learning video</p>
+          </article>
+          <article class="video-card">
+            <a class="video-frame video-watch-link" href="https://www.youtube.com/watch?v=zjHfAhcU6kE" target="_blank" rel="noopener noreferrer" aria-label="Watch statistics video lesson 4 on YouTube"><span class="video-play-icon" aria-hidden="true">▶</span><strong>Watch on YouTube</strong></a>
+            <h3>Video lesson 04</h3><p>Statistics learning video</p>
+          </article>
+          <article class="video-card">
+            <a class="video-frame video-watch-link" href="https://www.youtube.com/watch?v=8tPXYlvbRxA" target="_blank" rel="noopener noreferrer" aria-label="Watch statistics video lesson 5 on YouTube"><span class="video-play-icon" aria-hidden="true">▶</span><strong>Watch on YouTube</strong></a>
+            <h3>Video lesson 05</h3><p>Statistics learning video</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="survey-section" id="survey">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow" style="color:var(--muted)">Your feedback</div>
+            <h2>Quick learning survey</h2>
+          </div>
+          <p>Answer three short questions to share what helps you learn statistics.</p>
+        </div>
+        <form class="survey-card" id="learningSurvey">
+          <h3>Help us improve this learning portfolio</h3>
+          <fieldset class="survey-question">
+            <legend>1. Which topic do you find most interesting?</legend>
+            <label class="survey-option"><input type="radio" name="topic" value="Central tendency" required> Central tendency</label>
+            <label class="survey-option"><input type="radio" name="topic" value="Data analysis"> Data analysis</label>
+            <label class="survey-option"><input type="radio" name="topic" value="Probability"> Probability</label>
+            <label class="survey-option"><input type="radio" name="topic" value="Statistics basics"> Statistics basics</label>
+          </fieldset>
+          <fieldset class="survey-question">
+            <legend>2. How confident do you feel about statistics?</legend>
+            <label class="survey-option"><input type="radio" name="confidence" value="Very confident" required> Very confident</label>
+            <label class="survey-option"><input type="radio" name="confidence" value="Somewhat confident"> Somewhat confident</label>
+            <label class="survey-option"><input type="radio" name="confidence" value="Still learning"> Still learning</label>
+          </fieldset>
+          <fieldset class="survey-question">
+            <legend>3. What would help you most?</legend>
+            <label class="survey-option"><input type="radio" name="help" value="More examples" required> More examples</label>
+            <label class="survey-option"><input type="radio" name="help" value="Practice quizzes"> Practice quizzes</label>
+            <label class="survey-option"><input type="radio" name="help" value="Short videos"> Short videos</label>
+            <label class="survey-option"><input type="radio" name="help" value="Step-by-step solutions"> Step-by-step solutions</label>
+          </fieldset>
+          <button class="button survey-submit" type="submit">Submit my answers <span aria-hidden="true">→</span></button>
+          <p class="survey-note">This sample survey runs in your browser only. Answers are not uploaded or collected.</p>
+          <div class="survey-success" id="surveySuccess" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
       <section class="about" id="about">
         <div>
           <div class="eyebrow">About this collection</div>
@@ -211,7 +357,7 @@
           <p>This portfolio brings the course materials together in one simple place. Use it as a starting point for reviewing lessons, preparing for class, and building a stronger understanding of data.</p>
         </div>
         <div class="stats">
-          <div class="stat"><strong>04</strong><span>Learning resources</span></div>
+          <div class="stat"><strong>09</strong><span>Learning resources</span></div>
           <div class="stat"><strong>03</strong><span>PDF documents</span></div>
           <div class="stat"><strong>01</strong><span>Slide presentation</span></div>
           <div class="stat"><strong>∞</strong><span>Things to discover</span></div>
@@ -220,5 +366,16 @@
     </main>
     <footer>Statistics Learning Portfolio · A collection for learning and review</footer>
   </div>
+  <script>
+    document.getElementById('learningSurvey').addEventListener('submit', function (event) {
+      event.preventDefault();
+      if (!this.reportValidity()) return;
+      const answers = new FormData(this);
+      const result = document.getElementById('surveySuccess');
+      result.textContent = 'Thank you for your feedback! Your answers: ' +
+        ['topic', 'confidence', 'help'].map(key => answers.get(key)).join(' · ') + '.';
+      result.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
